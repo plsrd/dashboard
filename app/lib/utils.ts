@@ -1,4 +1,7 @@
 import { Revenue } from './definitions';
+import path from 'path';
+import { writeFile } from 'fs/promises';
+import sharp from 'sharp';
 
 export const formatCurrency = (amount: number) => {
   return (amount / 100).toLocaleString('en-US', {
@@ -66,4 +69,29 @@ export const generatePagination = (currentPage: number, totalPages: number) => {
     '...',
     totalPages,
   ];
+};
+
+export const generateAmountInCents = (amount: number) => amount * 100;
+
+export const generateDate = () => new Date().toISOString().split('T')[0];
+
+export const validate = (schema: any, formData: FormData) => {
+  return schema.safeParse(Object.fromEntries(formData.entries()));
+};
+
+export const uploadImage = async (file: File, name: string) => {
+  const buffer = Buffer.from(await file.arrayBuffer());
+  const fileExtension = file.type.split('/')[1];
+  const fileName = name.split(' ').join('-');
+  const image_url = '/customers/' + fileName + '.' + fileExtension;
+
+  try {
+    await sharp(buffer)
+      .resize(100, 100)
+      .toFile(path.join(process.cwd(), '/public' + image_url));
+
+    return image_url;
+  } catch (e) {
+    return null;
+  }
 };

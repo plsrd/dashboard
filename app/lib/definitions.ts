@@ -86,3 +86,21 @@ export type InvoiceForm = {
   amount: number;
   status: 'pending' | 'paid';
 };
+
+export type InvoiceState = {
+  errors?: {
+    customerId?: string[];
+    amount?: string[];
+    status?: string[];
+  };
+  message?: string | null;
+} | null;
+
+export type CustomerState = {
+  errors?: {
+    name?: string[];
+    email?: string[];
+    image_url?: string[];
+  };
+  message?: string | null;
+} | null;
