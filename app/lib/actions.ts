@@ -1,8 +1,6 @@
 'use server';
 
 import { v4 as uuid } from 'uuid';
-import path from 'path';
-import { writeFile } from 'fs/promises';
 import { sql } from '@vercel/postgres';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';

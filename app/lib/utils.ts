@@ -1,6 +1,5 @@
 import { Revenue } from './definitions';
 import path from 'path';
-import { writeFile } from 'fs/promises';
 import sharp from 'sharp';
 
 export const formatCurrency = (amount: number) => {
@@ -84,12 +83,11 @@ export const uploadImage = async (file: File, name: string) => {
   const fileExtension = file.type.split('/')[1];
   const fileName = name.split(' ').join('-');
   const image_url = '/customers/' + fileName + '.' + fileExtension;
-
+  console.log(path.join(process.cwd()));
   try {
-    await sharp(buffer)
-      .resize(100, 100)
-      .toFile(path.join(process.cwd(), '/public' + image_url));
-
+    // await sharp(buffer)
+    //   .resize(100, 100)
+    //   .toFile(path.join(process.cwd() + '/public' + image_url));
     return image_url;
   } catch (e) {
     return null;
